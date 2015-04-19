@@ -43,12 +43,17 @@ define(['react', 'logic', 'jsx!board'], function (React, logic, Board) {
             };
         },
 
+        onGuess: function(x, y) {
+            game.guess(x, y);
+            this.forceUpdate();
+        },
+
         render: function () {
             return <div>
                 <h1>Welcome to Battleships!</h1>
                 <label><input type="checkbox" checkedLink={this.linkState('showSolution')}/>Solution</label>
                 <label><input type="checkbox" checkedLink={this.linkState('showHints')}/>Hints</label>
-                <Board game={game} showSolution={this.state.showSolution} showHints={this.state.showHints}/>
+                <Board game={game} onGuess={this.onGuess} showSolution={this.state.showSolution} showHints={this.state.showHints}/>
                 <GuessCount count={game.guesses.length}/>
             </div>;
         }

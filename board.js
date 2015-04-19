@@ -4,8 +4,9 @@ define(['react', 'lodash'], function (React, _) {
         mixins: [],
 
         onClick: function(x, y) {
-            this.props.game.guess(x, y);
-            this.forceUpdate();
+            if (this.props.onGuess) {
+                this.props.onGuess(x, y);
+            }
         },
 
         render: function () {
