@@ -1,4 +1,4 @@
-define(['react', 'logic', 'jsx!board'], function(React, logic, Board) {
+define(['react', 'logic'], function(React, logic) {
 
     var ships = [
         new logic.Ship(1, 2, 'horizontal', 4),
