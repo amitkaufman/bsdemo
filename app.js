@@ -17,7 +17,7 @@ define(['react', 'logic', 'jsx!board'], function (React, logic, Board) {
 
     return React.createClass({
         displayName: 'App',
-        mixins: [],
+        mixins: [React.addons.LinkedStateMixin],
 
         getInitialState: function () {
             return {
@@ -26,19 +26,11 @@ define(['react', 'logic', 'jsx!board'], function (React, logic, Board) {
             };
         },
 
-        toggleSolution: function () {
-            this.setState({showSolution: !this.state.showSolution});
-        },
-
-        toggleHints: function () {
-            this.setState({showHints: !this.state.showHints});
-        },
-
         render: function () {
             return <div>
                 <h1>Welcome to Battleships!</h1>
-                <label><input type="checkbox" checked={this.state.showSolution} onChange={this.toggleSolution}/>Solution</label>
-                <label><input type="checkbox" checked={this.state.showHints} onChange={this.toggleHints}/>Hints</label>
+                <label><input type="checkbox" checkedLink={this.linkState('showSolution')}/>Solution</label>
+                <label><input type="checkbox" checkedLink={this.linkState('showHints')}/>Hints</label>
                 <Board game={game} showSolution={this.state.showSolution} showHints={this.state.showHints}/>
             </div>;
         }
