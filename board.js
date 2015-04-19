@@ -9,7 +9,7 @@ define(['react', 'lodash'], function (React, _) {
         },
 
         render: function () {
-            var matrix = this.props.game.getMatrix();
+            var matrix = this.props.game.getMatrix(this.props.showSolution, this.props.showHints);
             var rows = [];
             _.forEach(matrix, function(row, rowIndex) {
                 var cells = [];

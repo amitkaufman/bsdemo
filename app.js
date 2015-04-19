@@ -1,4 +1,4 @@
-define(['react', 'logic', 'jsx!board'], function(React, logic, Board) {
+define(['react', 'logic', 'jsx!board'], function (React, logic, Board) {
 
     var ships = [
         new logic.Ship(1, 2, 'horizontal', 4),
@@ -19,10 +19,27 @@ define(['react', 'logic', 'jsx!board'], function(React, logic, Board) {
         displayName: 'App',
         mixins: [],
 
+        getInitialState: function () {
+            return {
+                showSolution: false,
+                showHints: false
+            };
+        },
+
+        toggleSolution: function () {
+            this.setState({showSolution: !this.state.showSolution});
+        },
+
+        toggleHints: function () {
+            this.setState({showHints: !this.state.showHints});
+        },
+
         render: function () {
             return <div>
                 <h1>Welcome to Battleships!</h1>
-                <Board game={game}/>
+                <label><input type="checkbox" checked={this.state.showSolution} onChange={this.toggleSolution}/>Solution</label>
+                <label><input type="checkbox" checked={this.state.showHints} onChange={this.toggleHints}/>Hints</label>
+                <Board game={game} showSolution={this.state.showSolution} showHints={this.state.showHints}/>
             </div>;
         }
     });
