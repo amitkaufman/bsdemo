@@ -15,6 +15,23 @@ define(['react', 'logic', 'jsx!board'], function (React, logic, Board) {
 
     var game = new logic.Game(ships);
 
+    var GuessCount = React.createClass({
+        displayName: 'GuessCount',
+        mixins: [],
+
+        getRenderCount: function() {
+            if (this.renderCount === undefined) {
+                this.renderCount = 0;
+            }
+            this.renderCount++;
+            return <span>Rendered <b>{this.renderCount}</b> times.</span>;
+        },
+
+        render: function () {
+            return <div>You have made <b>{this.props.count}</b> guesses. {this.getRenderCount()}</div>;
+        }
+    });
+
     return React.createClass({
         displayName: 'App',
         mixins: [React.addons.LinkedStateMixin],
@@ -32,6 +49,7 @@ define(['react', 'logic', 'jsx!board'], function (React, logic, Board) {
                 <label><input type="checkbox" checkedLink={this.linkState('showSolution')}/>Solution</label>
                 <label><input type="checkbox" checkedLink={this.linkState('showHints')}/>Hints</label>
                 <Board game={game} showSolution={this.state.showSolution} showHints={this.state.showHints}/>
+                <GuessCount count={game.guesses.length}/>
             </div>;
         }
     });
