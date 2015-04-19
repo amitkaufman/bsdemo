@@ -71,9 +71,13 @@ define(['react', 'logic', 'jsx!board'], function (React, logic, Board) {
         getLoggedOut: function() {
             return <div>
                 <h1>Welcome to Battleships!</h1>
-                <input type="text" valueLink={this.linkState('user')}/>
+                <input ref="inp" type="text" valueLink={this.linkState('user')}/>
                 <button onClick={this.logIn}>Start</button>
             </div>;
+        },
+
+        componentDidMount: function() {
+            this.refs.inp.getDOMNode().focus();
         },
 
         render: function () {
