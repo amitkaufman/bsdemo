@@ -17,7 +17,7 @@ define(['react', 'logic', 'jsx!board'], function (React, logic, Board) {
 
     var GuessCount = React.createClass({
         displayName: 'GuessCount',
-        mixins: [],
+        mixins: [React.addons.PureRenderMixin],
 
         getRenderCount: function() {
             if (this.renderCount === undefined) {
@@ -25,10 +25,6 @@ define(['react', 'logic', 'jsx!board'], function (React, logic, Board) {
             }
             this.renderCount++;
             return <span>Rendered <b>{this.renderCount}</b> times.</span>;
-        },
-
-        shouldComponentUpdate: function(nextProps) {
-            return this.props.count !== nextProps.count;
         },
 
         render: function () {
@@ -57,7 +53,7 @@ define(['react', 'logic', 'jsx!board'], function (React, logic, Board) {
                 <h1>Welcome to Battleships!</h1>
                 <label><input type="checkbox" checkedLink={this.linkState('showSolution')}/>Solution</label>
                 <label><input type="checkbox" checkedLink={this.linkState('showHints')}/>Hints</label>
-                <Board game={game} onGuess={this.onGuess} showSolution={this.state.showSolution} showHints={this.state.showHints}/>
+                <Board matrix={game.getMatrix(this.state.showSolution, this.state.showHints)} onGuess={this.onGuess}/>
                 <GuessCount count={game.guesses.length}/>
             </div>;
         }

@@ -1,7 +1,7 @@
 define(['react', 'lodash'], function (React, _) {
     return React.createClass({
         displayName: 'Board',
-        mixins: [],
+        mixins: [React.addons.PureRenderMixin],
 
         onClick: function(x, y) {
             if (this.props.onGuess) {
@@ -10,9 +10,8 @@ define(['react', 'lodash'], function (React, _) {
         },
 
         render: function () {
-            var matrix = this.props.game.getMatrix(this.props.showSolution, this.props.showHints);
             var rows = [];
-            _.forEach(matrix, function(row, rowIndex) {
+            _.forEach(this.props.matrix, function(row, rowIndex) {
                 var cells = [];
                 _.forEach(row, function(cell, cellIndex) {
                     cells.push(<td onClick={this.onClick.bind(this, cellIndex, rowIndex)} className={cell}></td>);
