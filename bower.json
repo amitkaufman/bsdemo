@@ -1,0 +1,25 @@
+{
+  "name": "battleships",
+  "version": "0.0.0",
+  "homepage": "https://github.com/amitkaufman/bsdemo",
+  "authors": [
+    "Amit Kaufman <amitk@wix.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "requirejs": "~2.1.15",
+    "lodash": "~2.4.1",
+    "requirejs-domready": "~2.0.1",
+    "react": "~0.12.1",
+    "requirejs-text": "~2.0.12",
+    "requirejs-plugins": "~1.0.3"
+  }
+}
