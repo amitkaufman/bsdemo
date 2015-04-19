@@ -1,4 +1,4 @@
-define(['react', 'logic'], function(React, logic) {
+define(['react', 'logic', 'jsx!board'], function(React, logic, Board) {
 
     var ships = [
         new logic.Ship(1, 2, 'horizontal', 4),
@@ -13,4 +13,17 @@ define(['react', 'logic'], function(React, logic) {
         new logic.Ship(7, 3, 'horizontal', 1)
     ];
 
+    var game = new logic.Game(ships);
+
+    return React.createClass({
+        displayName: 'App',
+        mixins: [],
+
+        render: function () {
+            return <div>
+                <h1>Welcome to Battleships!</h1>
+                <Board game={game}/>
+            </div>;
+        }
+    });
 });
