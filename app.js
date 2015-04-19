@@ -27,6 +27,10 @@ define(['react', 'logic', 'jsx!board'], function (React, logic, Board) {
             return <span>Rendered <b>{this.renderCount}</b> times.</span>;
         },
 
+        shouldComponentUpdate: function(nextProps) {
+            return this.props.count !== nextProps.count;
+        },
+
         render: function () {
             return <div>You have made <b>{this.props.count}</b> guesses. {this.getRenderCount()}</div>;
         }
