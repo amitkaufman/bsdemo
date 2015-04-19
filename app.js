@@ -38,6 +38,8 @@ define(['react', 'logic', 'jsx!board'], function (React, logic, Board) {
 
         getInitialState: function () {
             return {
+                loggedIn: false,
+                user: '',
                 showSolution: false,
                 showHints: false
             };
@@ -48,14 +50,34 @@ define(['react', 'logic', 'jsx!board'], function (React, logic, Board) {
             this.forceUpdate();
         },
 
-        render: function () {
+        logIn: function() {
+            if (!this.state.user) {
+                alert('Please enter your username to play!');
+                return;
+            }
+            this.setState({loggedIn: true});
+        },
+
+        getLoggedIn: function() {
             return <div>
-                <h1>Welcome to Battleships!</h1>
+                <h1>Welcome {this.state.user}!</h1>
                 <label><input type="checkbox" checkedLink={this.linkState('showSolution')}/>Solution</label>
                 <label><input type="checkbox" checkedLink={this.linkState('showHints')}/>Hints</label>
                 <Board matrix={game.getMatrix(this.state.showSolution, this.state.showHints)} onGuess={this.onGuess}/>
                 <GuessCount count={game.guesses.length}/>
             </div>;
+        },
+
+        getLoggedOut: function() {
+            return <div>
+                <h1>Welcome to Battleships!</h1>
+                <input type="text" valueLink={this.linkState('user')}/>
+                <button onClick={this.logIn}>Start</button>
+            </div>;
+        },
+
+        render: function () {
+            return this.state.loggedIn ? this.getLoggedIn() : this.getLoggedOut();
         }
     });
 });
