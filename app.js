@@ -13,4 +13,6 @@ define(['react', 'logic'], function(React, logic) {
         new logic.Ship(7, 3, 'horizontal', 1)
     ];
 
+    // START BY CREATING AND RETURNING THE FIRST REACT COMPONENT HERE
+
 });
