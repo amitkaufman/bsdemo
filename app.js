@@ -1,4 +1,4 @@
-define(['react', 'logic'], function(React, logic) {
+define(['react', 'logic', 'jsx!board'], function(React, logic, Board) {
 
     var ships = [
         new logic.Ship(1, 2, 'horizontal', 4),
@@ -13,6 +13,76 @@ define(['react', 'logic'], function(React, logic) {
         new logic.Ship(7, 3, 'horizontal', 1)
     ];
 
-    // START BY CREATING AND RETURNING THE FIRST REACT COMPONENT HERE
+    var GuessCount = React.createClass({
+        displayName: 'GuessCount',
+        mixins: [React.addons.PureRenderMixin],
+
+        getRenderCount: function() {
+            if (this.renderCount === undefined) {
+                this.renderCount = 0;
+            }
+            this.renderCount++;
+            return <span>Rendered <b>{this.renderCount}</b> times</span>;
+        },
+
+        render: function () {
+            return <div>You have guessed {this.props.count} times. {this.getRenderCount()}</div>;
+        }
+    });
+
+    var game = new logic.Game(ships);
+
+    return React.createClass({
+        displayName: 'App',
+        mixins: [React.addons.LinkedStateMixin],
+
+        getInitialState: function() {
+            return {
+                loggedIn: false,
+                user: '',
+                showSolution: false,
+                showHints: false
+            };
+        },
+
+        onGuess: function(x, y) {
+            game.guess(x, y);
+            this.forceUpdate();
+        },
+
+        login: function() {
+            if (!this.state.user) {
+                alert("Shutup!");
+                return;
+            }
+            this.setState({loggedIn: true});
+        },
+
+        getLoggedIn: function() {
+            return <div>
+                <h1>Welcome {this.state.user}!</h1>
+                <label><input type="checkbox" checkedLink={this.linkState('showSolution')}/>Solution</label>
+                <label><input type="checkbox" checkedLink={this.linkState('showHints')}/>Hints</label>
+                <Board matrix={game.getMatrix(this.state.showSolution, this.state.showHints)} onGuess={this.onGuess}/>
+                <GuessCount count={game.guesses.length}/>
+            </div>;
+        },
+
+        getLoggedOut: function() {
+            return <div>
+                <h1>Welcome to Battleships!</h1>
+                <input ref="inp" type="text" valueLink={this.linkState('user')}/>
+                <button onClick={this.login}>Start</button>
+            </div>;
+        },
+
+        componentDidMount: function() {
+            this.refs.inp.getDOMNode().focus();
+        },
+
+        render: function () {
+            return this.state.loggedIn ? this.getLoggedIn() : this.getLoggedOut();
+        }
+    });
 
 });
